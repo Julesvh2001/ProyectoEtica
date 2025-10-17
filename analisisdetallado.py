@@ -3847,7 +3847,7 @@ if seleccion == "Ligas Alternas":
     ligas_temporadas_la = {
         # EDITA/AGREGA AQUÍ
         "MLS Next Pro, USA": ["2025"],
-        "Liga de Expansión, México": ["24/25"],
+        "Liga de Expansión, México": ["24/25", "25/26"],
         "Liga MX Sub-21, México": ["25/26"],
         "Liga 1, Perú": ["2025"],
         "Copa Tigo, Bolivia": ["2025"],
@@ -3886,6 +3886,7 @@ if seleccion == "Ligas Alternas":
         # EDITA/AGREGA AQUÍ
         ("MLS Next Pro, USA", "2025"): "nextpro2025.csv",
         ("Liga de Expansión, México", "24/25"): "expansion2425.csv",
+        ("Liga de Expansión, México", "25/26"): "expansion2526.csv",
         ("Liga MX Sub-21, México", "25/26"): "sub212526.csv",
         ("Liga 1, Perú", "2025"): "peru2025.csv",
         ("Copa Tigo, Bolivia", "2025"): "bolivia2025.csv",
@@ -4994,7 +4995,7 @@ if seleccion == "Radares Ligas Alternas":
 
     ligas_temporadas_la = {
         "MLS Next Pro, USA": ["2025"],
-        "Liga de Expansión, México": ["24/25"],
+        "Liga de Expansión, México": ["24/25", "25/26"],
         "Liga MX Sub-21, México": ["25/26"],
         "Liga 1, Perú": ["2025"],
         "Copa Tigo, Bolivia": ["2025"],
@@ -5024,6 +5025,7 @@ if seleccion == "Radares Ligas Alternas":
     archivos_csv_la = {
         ("MLS Next Pro, USA", "2025"): "nextpro2025.csv",
         ("Liga de Expansión, México", "24/25"): "expansion2425.csv",
+        ("Liga de Expansión, México", "25/26"): "expansion2526.csv",
         ("Liga MX Sub-21, México", "25/26"): "sub212526.csv",
         ("Liga 1, Perú", "2025"): "peru2025.csv",
         ("Copa Tigo, Bolivia", "2025"): "bolivia2025.csv",
