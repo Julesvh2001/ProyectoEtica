@@ -190,7 +190,7 @@ if seleccion == "Perfil de Jugadores":
     ligas_temporadas = {
         "Liga MX": ["2024/2025", "2025/2026"],
         "Liga Profesional, Argentina": ["2025"],
-        "Jupiler Pro League, Bélgica": ["2024/2025"],
+        "Jupiler Pro League, Bélgica": ["2024/2025", "2025/2026"],
         "Serie A, Brasil": ["2025"],
         "Primera División, Chile": ["2025"],
         "Primera A, Colombia": ["2025"],
@@ -202,11 +202,11 @@ if seleccion == "Perfil de Jugadores":
         "Serie B, Italia": ["2024/2025"],
         "Eredivisie, Países Bajos": ["2024/2025"],
         "División Profesional, Paraguay": ["2025"],
-        "Primeira Liga, Portugal": ["2024/2025"],
+        "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025"],
         "Pro League, Arabia": ["2024/2025"],
         "La Liga, España": ["2024/2025"],
-        "La Liga 2, España": ["2024/2025"],
+        "La Liga 2, España": ["2024/2025", "2025/2026"],
         "Primera División, Uruguay": ["2025"],
         "MLS, Estados Unidos": ["2025"],
 
@@ -218,6 +218,7 @@ if seleccion == "Perfil de Jugadores":
         ("Liga MX", "2025/2026"): "ligamxp902526.csv",
         ("Liga Profesional, Argentina", "2025"): "argp902025.csv",
         ("Jupiler Pro League, Bélgica", "2024/2025"): "belp902425.csv",
+        ("Jupiler Pro League, Bélgica", "2025/2026"): "belp902526.csv",
         ("Serie A, Brasil", "2025"): "brap902025.csv",
         ("Primera División, Chile", "2025"): "chip902025.csv",
         ("Primera A, Colombia", "2025"): "colp902025.csv",
@@ -230,10 +231,12 @@ if seleccion == "Perfil de Jugadores":
         ("Eredivisie, Países Bajos", "2024/2025"): "nedp902425.csv",
         ("División Profesional, Paraguay", "2025"): "parp902025.csv",
         ("Primeira Liga, Portugal", "2024/2025"): "porp902425.csv",
+        ("Primeira Liga, Portugal", "2025/2026"): "porp902526.csv",
         ("Premier League, Rusia", "2024/2025"): "rusp902425.csv",
         ("Pro League, Arabia", "2024/2025"): "arap902425.csv",
         ("La Liga, España", "2024/2025"): "espp902425.csv",
         ("La Liga 2, España", "2024/2025"): "esp2p902425.csv",
+        ("La Liga 2, España", "2025/2026"): "laliga22526.csv",
         ("Primera División, Uruguay", "2025"): "urup902025.csv",
         ("MLS, Estados Unidos", "2025"): "mlsp902025.csv",
     }
@@ -1371,9 +1374,9 @@ elif seleccion == "Radares Estadísticos":
     st.sidebar.markdown("### Selecciona la Liga y Temporada")
 
     ligas_temporadas = {
-        "Liga MX": ["2024/2025"],
+        "Liga MX": ["2024/2025", "2025/2026"],
         "Liga Profesional, Argentina": ["2025"],
-        "Jupiler Pro League, Bélgica": ["2024/2025"],
+        "Jupiler Pro League, Bélgica": ["2024/2025", "2025/2026"],
         "Serie A, Brasil": ["2025"],
         "Primera División, Chile": ["2025"],
         "Primera A, Colombia": ["2025"],
@@ -1385,19 +1388,21 @@ elif seleccion == "Radares Estadísticos":
         "Serie B, Italia": ["2024/2025"],
         "Eredivisie, Países Bajos": ["2024/2025"],
         "División Profesional, Paraguay": ["2025"],
-        "Primeira Liga, Portugal": ["2024/2025"],
+        "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025"],
         "Pro League, Arabia": ["2024/2025"],
         "La Liga, España": ["2024/2025"],
-        "La Liga 2, España": ["2024/2025"],
+        "La Liga 2, España": ["2024/2025", "2025/2026"],
         "Primera División, Uruguay": ["2025"],
         "MLS, Estados Unidos": ["2025"],
     }
 
     archivos_csv = {
         ("Liga MX", "2024/2025"): "ligamxp902425.csv",
+        ("Liga MX", "2025/2026"): "ligamxp902526.csv",
         ("Liga Profesional, Argentina", "2025"): "argp902025.csv",
         ("Jupiler Pro League, Bélgica", "2024/2025"): "belp902425.csv",
+        ("Jupiler Pro League, Bélgica", "2025/2026"): "belp902526.csv",
         ("Serie A, Brasil", "2025"): "brap902025.csv",
         ("Primera División, Chile", "2025"): "chip902025.csv",
         ("Primera A, Colombia", "2025"): "colp902025.csv",
@@ -1410,10 +1415,12 @@ elif seleccion == "Radares Estadísticos":
         ("Eredivisie, Países Bajos", "2024/2025"): "nedp902425.csv",
         ("División Profesional, Paraguay", "2025"): "parp902025.csv",
         ("Primeira Liga, Portugal", "2024/2025"): "porp902425.csv",
+        ("Primeira Liga, Portugal", "2025/2026"): "porp902526.csv",
         ("Premier League, Rusia", "2024/2025"): "rusp902425.csv",
         ("Pro League, Arabia", "2024/2025"): "arap902425.csv",
         ("La Liga, España", "2024/2025"): "espp902425.csv",
         ("La Liga 2, España", "2024/2025"): "esp2p902425.csv",
+        ("La Liga 2, España", "2025/2026"): "laliga22526.csv",
         ("Primera División, Uruguay", "2025"): "urup902025.csv",
         ("MLS, Estados Unidos", "2025"): "mlsp902025.csv",
     }
@@ -1491,7 +1498,6 @@ elif seleccion == "Radares Estadísticos":
         )].copy()
     elif grupo == "Interiores":
         pos_interiores = [
-            "Left Midfielder", "Right Midfielder",
             "Centre Midfielder", "Central Midfielder",
             "Left Centre Midfielder", "Right Centre Midfielder"
         ]
@@ -1504,7 +1510,8 @@ elif seleccion == "Radares Estadísticos":
     elif grupo == "Extremos":
         pos_extremos = [
             "Left Wing", "Right Wing",
-            "Left Winger", "Right Winger"
+            "Left Winger", "Right Winger",
+            "Left Midfielder", "Right Midfielder"
         ]
         df_radar = df_radar[df_radar["PosPrim"].isin(pos_extremos)].copy()
     else:  # Delanteros
@@ -3849,6 +3856,7 @@ if seleccion == "Ligas Alternas":
         "MLS Next Pro, USA": ["2025"],
         "Liga de Expansión, México": ["24/25", "25/26"],
         "Liga MX Sub-21, México": ["25/26"],
+        "Liga MX Sub-23, México": ["24/25"],
         "Liga 1, Perú": ["2025"],
         "Copa Tigo, Bolivia": ["2025"],
         "Liga Futve, Venezuela": ["2025"],
@@ -3888,6 +3896,7 @@ if seleccion == "Ligas Alternas":
         ("Liga de Expansión, México", "24/25"): "expansion2425.csv",
         ("Liga de Expansión, México", "25/26"): "expansion2526.csv",
         ("Liga MX Sub-21, México", "25/26"): "sub212526.csv",
+        ("Liga MX Sub-23, México", "24/25"): "sub232425.csv",
         ("Liga 1, Perú", "2025"): "peru2025.csv",
         ("Copa Tigo, Bolivia", "2025"): "bolivia2025.csv",
         ("Liga Futve, Venezuela", "2025"): "venezuela2025.csv",
@@ -4997,6 +5006,7 @@ if seleccion == "Radares Ligas Alternas":
         "MLS Next Pro, USA": ["2025"],
         "Liga de Expansión, México": ["24/25", "25/26"],
         "Liga MX Sub-21, México": ["25/26"],
+        "Liga MX Sub-23, México": ["24/25"],
         "Liga 1, Perú": ["2025"],
         "Copa Tigo, Bolivia": ["2025"],
         "Liga Futve, Venezuela": ["2025"],
@@ -5027,6 +5037,7 @@ if seleccion == "Radares Ligas Alternas":
         ("Liga de Expansión, México", "24/25"): "expansion2425.csv",
         ("Liga de Expansión, México", "25/26"): "expansion2526.csv",
         ("Liga MX Sub-21, México", "25/26"): "sub212526.csv",
+        ("Liga MX Sub-23, México", "24/25"): "sub232425.csv",
         ("Liga 1, Perú", "2025"): "peru2025.csv",
         ("Copa Tigo, Bolivia", "2025"): "bolivia2025.csv",
         ("Liga Futve, Venezuela", "2025"): "venezuela2025.csv",
