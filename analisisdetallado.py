@@ -205,7 +205,7 @@ if seleccion == "Perfil de Jugadores":
         "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025"],
         "Pro League, Arabia": ["2024/2025"],
-        "La Liga, España": ["2024/2025"],
+        "La Liga, España": ["2024/2025", "2025/2026"],
         "La Liga 2, España": ["2024/2025", "2025/2026"],
         "Primera División, Uruguay": ["2025"],
         "MLS, Estados Unidos": ["2025"],
@@ -235,6 +235,7 @@ if seleccion == "Perfil de Jugadores":
         ("Premier League, Rusia", "2024/2025"): "rusp902425.csv",
         ("Pro League, Arabia", "2024/2025"): "arap902425.csv",
         ("La Liga, España", "2024/2025"): "espp902425.csv",
+        ("La Liga, España", "2025/2026"): "laligap902526.csv",
         ("La Liga 2, España", "2024/2025"): "esp2p902425.csv",
         ("La Liga 2, España", "2025/2026"): "laliga22526.csv",
         ("Primera División, Uruguay", "2025"): "urup902025.csv",
@@ -1125,7 +1126,6 @@ if seleccion == "Perfil de Jugadores":
 ##############################################################################################################
 
 
-
 elif seleccion == "Radares Estadísticos":
     import numpy as np
     import pandas as pd
@@ -1231,7 +1231,6 @@ elif seleccion == "Radares Estadísticos":
                     showlegend=False,
                 )
             )
-
 
         # Etiquetas de variables (r=110 para aire)
         fig.add_trace(
@@ -1391,7 +1390,7 @@ elif seleccion == "Radares Estadísticos":
         "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025"],
         "Pro League, Arabia": ["2024/2025"],
-        "La Liga, España": ["2024/2025"],
+        "La Liga, España": ["2024/2025", "2025/2026"],
         "La Liga 2, España": ["2024/2025", "2025/2026"],
         "Primera División, Uruguay": ["2025"],
         "MLS, Estados Unidos": ["2025"],
@@ -1419,6 +1418,7 @@ elif seleccion == "Radares Estadísticos":
         ("Premier League, Rusia", "2024/2025"): "rusp902425.csv",
         ("Pro League, Arabia", "2024/2025"): "arap902425.csv",
         ("La Liga, España", "2024/2025"): "espp902425.csv",
+        ("La Liga, España", "2025/2026"): "laligap902526.csv",
         ("La Liga 2, España", "2024/2025"): "esp2p902425.csv",
         ("La Liga 2, España", "2025/2026"): "laliga22526.csv",
         ("Primera División, Uruguay", "2025"): "urup902025.csv",
@@ -1721,16 +1721,61 @@ elif seleccion == "Radares Estadísticos":
     jugador_sel = st.selectbox("Jugador", jugadores_disponibles, index=0)
 
     # =========================
+    # Modo de selección de variables
+    # =========================
+    st.markdown("### Modo de variables para el radar")
+    modo_radar = st.radio(
+        "Elige cómo quieres armar el radar:",
+        ["Radar predeterminado", "Seleccionar variables para el radar"],
+        index=0,
+        horizontal=True
+    )
+
+    # Construimos el diccionario de fases efectivas según el modo
+    fases_activas = {}
+
+    if modo_radar == "Radar predeterminado":
+        # Usamos todas las variables definidas originalmente
+        fases_activas = {
+            fase: [v for v in vars_fase if v in df_radar.columns]
+            for fase, vars_fase in fases_juego.items()
+        }
+        # Quitamos fases vacías
+        fases_activas = {f: vs for f, vs in fases_activas.items() if vs}
+
+    else:
+        # Modo personalizado: el usuario elige variables por fase
+        st.markdown("#### Selecciona las variables por fase de juego")
+        st.caption("Solo se muestran variables que existen en la base filtrada.")
+        for fase, vars_fase in fases_juego.items():
+            disponibles = [v for v in vars_fase if v in df_radar.columns]
+            if not disponibles:
+                continue
+
+            seleccionadas = st.multiselect(
+                f"{fase}",
+                options=disponibles,
+                default=disponibles,   # si quieres obligar a elegir desde cero, pon default=[]
+                key=f"ms_{fase}_{grupo}"
+            )
+            if seleccionadas:
+                fases_activas[fase] = seleccionadas
+
+        if not fases_activas:
+            st.warning("No has seleccionado ninguna métrica para el radar.")
+            st.stop()
+
+    # =========================
     # Render: radar centrado + grilla 3×N de distribuciones
     # =========================
-    if jugador_sel:
+    if jugador_sel and fases_activas:
         # Radar centrado
         left, mid, right = st.columns([0.05, 0.90, 0.05])
         with mid:
             fig = radar_barras_plotly(
                 jugador=jugador_sel,
                 df=df_radar,
-                fases_juego=fases_juego,
+                fases_juego=fases_activas,   # usamos fases activas (default o custom)
                 invertir_vars=invertir_vars,
                 colores_fases=("rgba(59,130,246,0.90)", "rgba(245,158,11,0.90)", "rgba(16,185,129,0.90)"),
                 chart_height=640,
@@ -1744,7 +1789,7 @@ elif seleccion == "Radares Estadísticos":
         charts = build_kde_charts(
             df=df_radar,
             jugador=jugador_sel,
-            fases_juego=fases_juego,
+            fases_juego=fases_activas,   # también solo para las variables activas
             height_each=120
         )
         if charts:
@@ -1754,10 +1799,6 @@ elif seleccion == "Radares Estadísticos":
                     if i + j < len(charts):
                         with cols[j]:
                             st.altair_chart(charts[i + j], use_container_width=True, theme=None)
-
-
-
-
 
 
 
@@ -3880,6 +3921,8 @@ if seleccion == "Ligas Alternas":
         "Primera RFEF, España": ["24/25"],
         "Segunda RFEF, España": ["24/25"],
         "Primera División, Turquía": ["24/25"],
+        "Bundesliga, Austria": ["24/25"],
+        "Super League, Suiza": ["24/25"]
 
 
 
@@ -3920,7 +3963,8 @@ if seleccion == "Ligas Alternas":
         ("Primera RFEF, España", "24/25"): "primerarfef2425.csv",
         ("Segunda RFEF, España", "24/25"): "segundarfef2425.csv",
         ("Primera División, Turquía", "24/25"): "turquia2425.csv",
-
+        ("Bundesliga, Austria", "24/25"): "austria2425.csv",
+        ("Super League, Suiza", "24/25"): "suiza2425.csv"
     }
 
 
@@ -4998,7 +5042,7 @@ if seleccion == "Radares Ligas Alternas":
         return charts
 
     # =========================
-    # Liga/Temporada -> CSV (sin depender de columnas internas)
+    # Liga/Temporada -> CSV
     # =========================
     st.sidebar.markdown("### Selecciona la Liga y Temporada (Ligas Alternas)")
 
@@ -5030,6 +5074,8 @@ if seleccion == "Radares Ligas Alternas":
         "Primera RFEF, España": ["24/25"],
         "Segunda RFEF, España": ["24/25"],
         "Primera División, Turquía": ["24/25"],
+        "Bundesliga, Austria": ["24/25"],
+        "Super League, Suiza": ["24/25"]
     }
 
     archivos_csv_la = {
@@ -5061,6 +5107,8 @@ if seleccion == "Radares Ligas Alternas":
         ("Primera RFEF, España", "24/25"): "primerarfef2425.csv",
         ("Segunda RFEF, España", "24/25"): "segundarfef2425.csv",
         ("Primera División, Turquía", "24/25"): "turquia2425.csv",
+        ("Bundesliga, Austria", "24/25"): "austria2425.csv",
+        ("Super League, Suiza", "24/25"): "suiza2425.csv"
     }
 
     ligas_disponibles_la = list(ligas_temporadas_la.keys())
@@ -5119,7 +5167,11 @@ if seleccion == "Radares Ligas Alternas":
         mn, mx = int(mins.min()), int(mins.max())
         min_default = max(600, mn)
         if mn < mx:
-            r_mins = st.sidebar.slider("Rango de Minutos Jugados", mn, mx, (min_default, mx), key=f"la_radar3_mins__{slug_liga}__{slug_temp}")
+            r_mins = st.sidebar.slider(
+                "Rango de Minutos Jugados",
+                mn, mx, (min_default, mx),
+                key=f"la_radar3_mins__{slug_liga}__{slug_temp}"
+            )
             df_radar = df_radar[df_radar["Minutos jugados"].between(r_mins[0], r_mins[1])]
     else:
         st.warning("La base no contiene 'Minutos jugados'."); st.stop()
@@ -5127,16 +5179,22 @@ if seleccion == "Radares Ligas Alternas":
     # Nacionalidad
     st.sidebar.markdown("### Filtrar por Nacionalidad")
     nats = sorted(df_radar["País de nacimiento"].dropna().astype(str).unique())
-    sel_all = st.sidebar.checkbox("Seleccionar todas las nacionalidades", value=True, key=f"la_radar3_natall__{slug_liga}__{slug_temp}")
-    selected_nats = nats if sel_all else st.sidebar.multiselect("Nacionalidades", nats, default=nats, key=f"la_radar3_natlist__{slug_liga}__{slug_temp}")
+    sel_all = st.sidebar.checkbox(
+        "Seleccionar todas las nacionalidades",
+        value=True,
+        key=f"la_radar3_natall__{slug_liga}__{slug_temp}"
+    )
+    selected_nats = nats if sel_all else st.sidebar.multiselect(
+        "Nacionalidades", nats, default=nats,
+        key=f"la_radar3_natlist__{slug_liga}__{slug_temp}"
+    )
     df_radar = df_radar[df_radar["País de nacimiento"].isin(selected_nats)]
     if df_radar.empty:
         st.warning("No hay jugadores tras aplicar filtros."); st.stop()
 
     # =========================
-    # Fases por grupo (3 fases) usando tus columnas en español
+    # Fases por grupo (3 fases) usando columnas en español
     # =========================
-    # --- Porteros: Atajadas / Juego Aéreo y Salidas / Distribución ---
     fases_gk = {
         "Atajadas": [
             "Paradas, %", "Goles evitados", "Porterías imbatidas en los 90"
@@ -5149,9 +5207,8 @@ if seleccion == "Radares Ligas Alternas":
             "Pases progresivos/90", "Precisión pases progresivos, %", "Pases recibidos /90"
         ],
     }
-    inv_gk = {"xG en contra"}  # si la tuvieras y decides añadirla a alguna fase, invierte
+    inv_gk = {"xG en contra"}
 
-    # --- Centrales: Defensivas / Construcción / Ofensivas (aporte) ---
     fases_cb = {
         "Defensivas": [
             "Acciones defensivas realizadas/90", "Duelos defensivos/90", "Duelos defensivos ganados, %",
@@ -5164,12 +5221,11 @@ if seleccion == "Radares Ligas Alternas":
             "Pases progresivos/90"
         ],
         "Ofensivas": [
-            "Acciones de ataque exitosas/90", "Remates/90"  # si existen; si no, se omiten automáticamente
+            "Acciones de ataque exitosas/90", "Remates/90"
         ],
     }
     inv_cb = set()
 
-    # --- Carrileros/Laterales: Defensivas / Construcción / Ofensivas ---
     fases_wb = {
         "Defensivas": [
             "Acciones defensivas realizadas/90", "Duelos defensivos/90", "Duelos defensivos ganados, %", "Posesión conquistada después de una entrada",
@@ -5188,7 +5244,6 @@ if seleccion == "Radares Ligas Alternas":
     }
     inv_wb = set()
 
-    # --- Contenciones (DM): Defensivas / Construcción / Ofensivas ---
     fases_dm = {
         "Defensivas": [
             "Acciones defensivas realizadas/90", "Duelos defensivos ganados, %",
@@ -5206,7 +5261,6 @@ if seleccion == "Radares Ligas Alternas":
     }
     inv_dm = set()
 
-    # --- Interiores (CM): Defensivas / Construcción / Ofensivas ---
     fases_cm = {
         "Defensivas": [
             "Acciones defensivas realizadas/90", "Duelos defensivos ganados, %",
@@ -5226,10 +5280,8 @@ if seleccion == "Radares Ligas Alternas":
     }
     inv_cm = set()
 
-    # --- Volantes Ofensivos (AM): Defensivas (presión alta ligera) / Construcción / Definición ---
     fases_am = {
         "Defensivas": [
-            # si no existen se omiten
             "Acciones defensivas realizadas/90", "Duelos defensivos ganados, %", "Entradas/90"
         ],
         "Construcción": [
@@ -5246,7 +5298,6 @@ if seleccion == "Radares Ligas Alternas":
     }
     inv_am = set()
 
-    # --- Extremos (W): Defensivas / Construcción (desborde) / Definición ---
     fases_w = {
         "Defensivas": [
             "Acciones defensivas realizadas/90", "Duelos defensivos ganados, %", "Entradas/90"
@@ -5266,10 +5317,8 @@ if seleccion == "Radares Ligas Alternas":
     }
     inv_w = set()
 
-    # --- Delanteros (ST/CF): Defensivas (primer esfuerzo) / Construcción / Definición ---
     fases_st = {
         "Defensivas": [
-            # si no existen se omiten
             "Acciones defensivas realizadas/90", "Duelos defensivos ganados, %"
         ],
         "Construcción": [
@@ -5281,13 +5330,12 @@ if seleccion == "Radares Ligas Alternas":
         ],
         "Definición": [
             "Goles", "xG", "Asistencias", "xA", "Remates", "Remates/90",
-            "Tiros a la portería, %"
-            "Centros/90"
+            "Tiros a la portería, %", "Centros/90"
         ],
     }
     inv_st = set()
 
-    # Selección del set de fases según grupo
+    # Selección del set de fases según grupo (base)
     if grupo == "Porteros":
         fases_juego = {k: [c for c in v if c in df_radar.columns] for k, v in fases_gk.items()}
         invertir_vars = inv_gk & set(df_radar.columns)
@@ -5326,16 +5374,55 @@ if seleccion == "Radares Ligas Alternas":
     df_radar["Name"] = df_radar["Jugador"]
 
     # =========================
+    # Modo de variables para el radar
+    # =========================
+    st.markdown("### Modo de variables para el radar")
+    modo_radar_la = st.radio(
+        "Elige cómo quieres armar el radar:",
+        ["Radar predeterminado", "Seleccionar variables para el radar"],
+        index=0,
+        horizontal=True,
+        key=f"la_radar3_modo__{slug_liga}__{slug_temp}"
+    )
+
+    fases_activas = {}
+
+    if modo_radar_la == "Radar predeterminado":
+        # Usamos todas las variables definidas para el grupo, filtrando vacías
+        fases_activas = {fase: vars_f for fase, vars_f in fases_juego.items() if vars_f}
+    else:
+        # Modo personalizado: usuario elige variables por fase
+        st.markdown("#### Selecciona las variables por fase de juego")
+        st.caption("Solo se muestran variables que existen en la base filtrada.")
+
+        for fase, vars_fase in fases_juego.items():
+            disponibles = [v for v in vars_fase if v in df_radar.columns]
+            if not disponibles:
+                continue
+
+            seleccionadas = st.multiselect(
+                f"{fase}",
+                options=disponibles,
+                default=disponibles,  # si quieres obligar a elegir desde cero, pon default=[]
+                key=f"la_ms_{fase}_{grupo}_{slug_liga}_{slug_temp}"
+            )
+            if seleccionadas:
+                fases_activas[fase] = seleccionadas
+
+        if not fases_activas:
+            st.warning("No has seleccionado ninguna métrica para el radar."); st.stop()
+
+    # =========================
     # Render
     # =========================
-    if jugador_sel:
+    if jugador_sel and fases_activas:
         # Radar centrado
         left, mid, right = st.columns([0.05, 0.90, 0.05])
         with mid:
             fig = radar_barras_plotly(
                 jugador=jugador_sel,
                 df=df_radar,
-                fases_juego=fases_juego,
+                fases_juego=fases_activas,
                 invertir_vars=invertir_vars,
                 chart_height=640,
                 show_silueta=False
@@ -5345,7 +5432,7 @@ if seleccion == "Radares Ligas Alternas":
 
         # Distribuciones 3×N
         st.markdown("#### Distribuciones por métrica")
-        charts = build_kde_charts(df=df_radar, jugador=jugador_sel, fases_juego=fases_juego, height_each=120)
+        charts = build_kde_charts(df=df_radar, jugador=jugador_sel, fases_juego=fases_activas, height_each=120)
         if charts:
             for i in range(0, len(charts), 3):
                 cols = st.columns(3, gap="large")
