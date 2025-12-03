@@ -3922,10 +3922,10 @@ if seleccion == "Ligas Alternas":
         "Segunda RFEF, España": ["24/25"],
         "Primera División, Turquía": ["24/25"],
         "Bundesliga, Austria": ["24/25"],
-        "Super League, Suiza": ["24/25"]
-
-
-
+        "Super League, Suiza": ["24/25"],
+        "Stars League, Qatar": ["24/25"],
+        "Pro League, Emiratos Árabes": ["24/25"],
+       
 
 
 
@@ -3964,7 +3964,12 @@ if seleccion == "Ligas Alternas":
         ("Segunda RFEF, España", "24/25"): "segundarfef2425.csv",
         ("Primera División, Turquía", "24/25"): "turquia2425.csv",
         ("Bundesliga, Austria", "24/25"): "austria2425.csv",
-        ("Super League, Suiza", "24/25"): "suiza2425.csv"
+        ("Super League, Suiza", "24/25"): "suiza2425.csv",
+        ("Stars League, Qatar", "24/25"): "qatar2425.csv",
+        ("Pro League, Emiratos Árabes", "24/25"): "uae2425.csv",
+
+
+       
     }
 
 
@@ -5075,7 +5080,11 @@ if seleccion == "Radares Ligas Alternas":
         "Segunda RFEF, España": ["24/25"],
         "Primera División, Turquía": ["24/25"],
         "Bundesliga, Austria": ["24/25"],
-        "Super League, Suiza": ["24/25"]
+        "Super League, Suiza": ["24/25"],
+        "Stars League, Qatar": ["24/25"],
+        "Pro League, Emiratos Árabes": ["24/25"],
+
+
     }
 
     archivos_csv_la = {
@@ -5108,7 +5117,11 @@ if seleccion == "Radares Ligas Alternas":
         ("Segunda RFEF, España", "24/25"): "segundarfef2425.csv",
         ("Primera División, Turquía", "24/25"): "turquia2425.csv",
         ("Bundesliga, Austria", "24/25"): "austria2425.csv",
-        ("Super League, Suiza", "24/25"): "suiza2425.csv"
+        ("Super League, Suiza", "24/25"): "suiza2425.csv",
+        ("Stars League, Qatar", "24/25"): "qatar2425.csv",
+        ("Pro League, Emiratos Árabes", "24/25"): "uae2425.csv",
+
+
     }
 
     ligas_disponibles_la = list(ligas_temporadas_la.keys())
