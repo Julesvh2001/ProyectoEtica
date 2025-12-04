@@ -3925,10 +3925,6 @@ if seleccion == "Ligas Alternas":
         "Super League, Suiza": ["24/25"],
         "Stars League, Qatar": ["24/25"],
         "Pro League, Emiratos Árabes": ["24/25"],
-       
-
-
-
 
     }
 
@@ -3967,8 +3963,6 @@ if seleccion == "Ligas Alternas":
         ("Super League, Suiza", "24/25"): "suiza2425.csv",
         ("Stars League, Qatar", "24/25"): "qatar2425.csv",
         ("Pro League, Emiratos Árabes", "24/25"): "uae2425.csv",
-
-
        
     }
 
