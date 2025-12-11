@@ -11,6 +11,7 @@ import plotly.graph_objects as go
 import altair as alt
 import altair as alt  # dejar este import arriba en tu script
 
+
 def scatter_interactivo_altair(
     df,
     x,
@@ -25,59 +26,50 @@ def scatter_interactivo_altair(
     import altair as alt
     import streamlit as st
 
-    # Copia para no tocar el df original
     df = df.copy()
 
     # Marcamos los jugadores resaltados por lista
     highlight_names = set(highlight_names or [])
     df["is_highlight"] = df["Name"].isin(highlight_names)
 
-    # --- Estilos ---
+    # Estilos
     _axis_col = "#2B2B2B"
     _mean_col = "#9A9A9A"
     _bg       = "transparent"
 
-    # --- Promedios globales para las líneas de referencia ---
+    # Promedios
     x_mean = float(df[x].mean())
     y_mean = float(df[y].mean())
 
-    # --- Selección por clic (API "vieja" de Altair, más compatible con Streamlit Cloud) ---
-    sel = alt.selection(
-        type="multi",
+    # Selección por clic (multi)
+    sel = alt.selection_multi(
         fields=["Name", "Team"],
         on="click",
         clear="dblclick",
         empty="none"
     )
 
-    # --- Base chart (común) ---
+    # Base chart
     base_chart = alt.Chart(df).encode(
         x=alt.X(x, title=x, axis=alt.Axis(format=",.0f")),
         y=alt.Y(y, title=y, axis=alt.Axis(format=",.0f")),
         tooltip=[c for c in tooltip_cols if c in df.columns]
     )
 
-    # Tamaño de los puntos
+    # Tamaño
     if size_col in df.columns:
         size_enc = alt.Size(size_col, legend=None, scale=alt.Scale(range=[30, 500]))
     else:
         size_enc = alt.value(120)
 
-    # 1) Capa base: todos en gris tenue
+    # 1) Base gris
     pts_base = base_chart.mark_circle().encode(
         size=size_enc,
         color=alt.value(color_base),
         opacity=alt.value(0.35)
     )
 
-    # 2) Capa seleccionados por clic: se filtra con `sel` y se adjunta la selección al chart
-    pts_sel = base_chart.mark_circle().encode(
-        size=size_enc,
-        color=alt.value(color_sel),
-        opacity=alt.value(1.0)
-    ).add_selection(sel).transform_filter(sel)
-
-    # 3) Capa resaltados por lista: filtra 'is_highlight' y pinta en color_sel
+    # 2) Resaltados por multiselect (lista)
     pts_list = base_chart.transform_filter(
         alt.datum.is_highlight
     ).mark_circle().encode(
@@ -86,19 +78,28 @@ def scatter_interactivo_altair(
         opacity=alt.value(1.0)
     )
 
-    # Etiquetas para jugadores seleccionados por clic
-    labels_sel = base_chart.transform_filter(sel).mark_text(
-        dx=6, dy=-6, fontWeight="bold", color="#000000", clip=False
-    ).encode(text="Name")
+    # 3) Resaltados por clic (selección)
+    pts_click = base_chart.mark_circle().encode(
+        size=size_enc,
+        color=alt.value(color_sel),
+        opacity=alt.value(1.0)
+    ).add_selection(sel).transform_filter(sel)
 
-    # Etiquetas para jugadores resaltados por lista
+    # Labels por lista
     labels_list = base_chart.transform_filter(
         alt.datum.is_highlight
     ).mark_text(
         dx=6, dy=-6, fontWeight="bold", color="#000000", clip=False
     ).encode(text="Name")
 
-    # Líneas de promedio (vertical y horizontal)
+    # Labels por clic
+    labels_click = base_chart.transform_filter(
+        sel
+    ).mark_text(
+        dx=6, dy=-6, fontWeight="bold", color="#000000", clip=False
+    ).encode(text="Name")
+
+    # Líneas de promedio
     vline = alt.Chart(pd.DataFrame({"v": [x_mean]})).mark_rule(
         strokeDash=[5, 5], color=_mean_col, opacity=0.8
     ).encode(x="v:Q")
@@ -107,13 +108,12 @@ def scatter_interactivo_altair(
         strokeDash=[5, 5], color=_mean_col, opacity=0.8
     ).encode(y="h:Q")
 
-    # Composición final
     chart = (
         pts_base
-        + pts_sel
         + pts_list
-        + labels_sel
+        + pts_click
         + labels_list
+        + labels_click
         + vline
         + hline
     ).properties(
@@ -133,6 +133,9 @@ def scatter_interactivo_altair(
     )
 
     st.altair_chart(chart, use_container_width=True, theme=None)
+
+
+
 
 
 # Configuración inicial
