@@ -9,8 +9,7 @@ from streamlit_option_menu import option_menu
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import altair as alt
-
-import altair as alt  # asegúrate de tener este import
+import altair as alt  # dejar este import arriba en tu script
 
 def scatter_interactivo_altair(
     df,
@@ -26,7 +25,10 @@ def scatter_interactivo_altair(
     import altair as alt
     import streamlit as st
 
+    # Copia para no tocar el df original
     df = df.copy()
+
+    # Marcamos los jugadores resaltados por lista
     highlight_names = set(highlight_names or [])
     df["is_highlight"] = df["Name"].isin(highlight_names)
 
@@ -35,15 +37,15 @@ def scatter_interactivo_altair(
     _mean_col = "#9A9A9A"
     _bg       = "transparent"
 
-    # --- Promedios ---
+    # --- Promedios globales para las líneas de referencia ---
     x_mean = float(df[x].mean())
     y_mean = float(df[y].mean())
 
-    # --- Selección por clic (Name+Team para evitar ambigüedad) ---
-    sel = alt.selection_point(
-        fields=["Name","Team"],
+    # --- Selección por clic (API "vieja" de Altair, más compatible con Streamlit Cloud) ---
+    sel = alt.selection(
+        type="multi",
+        fields=["Name", "Team"],
         on="click",
-        toggle=True,
         clear="dblclick",
         empty="none"
     )
@@ -55,10 +57,11 @@ def scatter_interactivo_altair(
         tooltip=[c for c in tooltip_cols if c in df.columns]
     )
 
-    size_enc = (
-        alt.Size(size_col, legend=None, scale=alt.Scale(range=[30, 500]))
-        if size_col in df.columns else alt.value(120)
-    )
+    # Tamaño de los puntos
+    if size_col in df.columns:
+        size_enc = alt.Size(size_col, legend=None, scale=alt.Scale(range=[30, 500]))
+    else:
+        size_enc = alt.value(120)
 
     # 1) Capa base: todos en gris tenue
     pts_base = base_chart.mark_circle().encode(
@@ -67,14 +70,14 @@ def scatter_interactivo_altair(
         opacity=alt.value(0.35)
     )
 
-    # 2) Capa seleccionados por clic: filtra 'sel' y pinta verde
-    pts_sel = base_chart.transform_filter(sel).mark_circle().encode(
+    # 2) Capa seleccionados por clic: se filtra con `sel` y se adjunta la selección al chart
+    pts_sel = base_chart.mark_circle().encode(
         size=size_enc,
         color=alt.value(color_sel),
         opacity=alt.value(1.0)
-    ).add_params(sel)
+    ).add_selection(sel).transform_filter(sel)
 
-    # 3) Capa resaltados por lista: filtra 'is_highlight' y pinta verde
+    # 3) Capa resaltados por lista: filtra 'is_highlight' y pinta en color_sel
     pts_list = base_chart.transform_filter(
         alt.datum.is_highlight
     ).mark_circle().encode(
@@ -83,40 +86,53 @@ def scatter_interactivo_altair(
         opacity=alt.value(1.0)
     )
 
-    # Etiquetas para ambos tipos de resaltado
+    # Etiquetas para jugadores seleccionados por clic
     labels_sel = base_chart.transform_filter(sel).mark_text(
         dx=6, dy=-6, fontWeight="bold", color="#000000", clip=False
     ).encode(text="Name")
 
+    # Etiquetas para jugadores resaltados por lista
     labels_list = base_chart.transform_filter(
         alt.datum.is_highlight
     ).mark_text(
         dx=6, dy=-6, fontWeight="bold", color="#000000", clip=False
     ).encode(text="Name")
 
-    # Líneas de promedio
-    vline = alt.Chart(pd.DataFrame({"v":[x_mean]})).mark_rule(
-        strokeDash=[5,5], color=_mean_col, opacity=0.8
+    # Líneas de promedio (vertical y horizontal)
+    vline = alt.Chart(pd.DataFrame({"v": [x_mean]})).mark_rule(
+        strokeDash=[5, 5], color=_mean_col, opacity=0.8
     ).encode(x="v:Q")
 
-    hline = alt.Chart(pd.DataFrame({"h":[y_mean]})).mark_rule(
-        strokeDash=[5,5], color=_mean_col, opacity=0.8
+    hline = alt.Chart(pd.DataFrame({"h": [y_mean]})).mark_rule(
+        strokeDash=[5, 5], color=_mean_col, opacity=0.8
     ).encode(y="h:Q")
 
-    chart = (pts_base + pts_sel + pts_list + labels_sel + labels_list + vline + hline).properties(
+    # Composición final
+    chart = (
+        pts_base
+        + pts_sel
+        + pts_list
+        + labels_sel
+        + labels_list
+        + vline
+        + hline
+    ).properties(
         height=520,
         background=_bg,
         padding={"left": 10, "right": 160, "top": 40, "bottom": 30}
     ).configure_view(
         strokeWidth=0
     ).configure_axis(
-        grid=False, domain=False,
-        tickColor=_axis_col, labelColor=_axis_col, titleColor=_axis_col
-    ).configure_title(color=_axis_col)
+        grid=False,
+        domain=False,
+        tickColor=_axis_col,
+        labelColor=_axis_col,
+        titleColor=_axis_col
+    ).configure_title(
+        color=_axis_col
+    )
 
     st.altair_chart(chart, use_container_width=True, theme=None)
-
-
 
 
 # Configuración inicial
