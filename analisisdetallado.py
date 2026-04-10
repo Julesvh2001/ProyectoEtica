@@ -208,7 +208,7 @@ if seleccion == "Perfil de Jugadores":
         "Liga Profesional, Argentina": ["2025", "2026"],
         "Jupiler Pro League, Bélgica": ["2024/2025", "2025/2026"],
         "Serie A, Brasil": ["2025", "2026"],
-        "Primera División, Chile": ["2025"],
+        "Primera División, Chile": ["2025", "2026"],
         "Primera A, Colombia": ["2025", "2026"],
         "Liga Pro, Ecuador": ["2025"],
         "Premier League, Inglaterra": ["2024/2025", "2025/2026"],
@@ -217,14 +217,14 @@ if seleccion == "Perfil de Jugadores":
         "Serie A, Italia": ["2024/2025", "2025/2026"],
         "Serie B, Italia": ["2024/2025", "2025/2026"],
         "Eredivisie, Países Bajos": ["2024/2025", "2025/2026"],
-        "División Profesional, Paraguay": ["2025"],
+        "División Profesional, Paraguay": ["2025", "2026"],
         "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025", "2025/2026"],
         "Pro League, Arabia": ["2024/2025", "2025/2026"],
         "La Liga, España": ["2024/2025", "2025/2026"],
         "La Liga 2, España": ["2024/2025", "2025/2026"],
         "Primera División, Uruguay": ["2025"],
-        "MLS, Estados Unidos": ["2025"],
+        "MLS, Estados Unidos": ["2025", "2026"],
 
 
     }
@@ -239,6 +239,7 @@ if seleccion == "Perfil de Jugadores":
         ("Serie A, Brasil", "2025"): "brap902025.csv",
         ("Serie A, Brasil", "2026"): "brap902026.csv",
         ("Primera División, Chile", "2025"): "chip902025.csv",
+        ("Primera División, Chile", "2026"): "chip902026.csv",
         ("Primera A, Colombia", "2025"): "colp902025.csv",
         ("Primera A, Colombia", "2026"): "colp902026.csv",
         ("Liga Pro, Ecuador", "2025"): "ecup902025.csv",
@@ -255,6 +256,7 @@ if seleccion == "Perfil de Jugadores":
         ("Eredivisie, Países Bajos", "2024/2025"): "nedp902425.csv",
         ("Eredivisie, Países Bajos", "2025/2026"): "nedp902526.csv",
         ("División Profesional, Paraguay", "2025"): "parp902025.csv",
+        ("División Profesional, Paraguay", "2026"): "parp902026.csv",
         ("Primeira Liga, Portugal", "2024/2025"): "porp902425.csv",
         ("Primeira Liga, Portugal", "2025/2026"): "porp902526.csv",
         ("Premier League, Rusia", "2024/2025"): "rusp902425.csv",
@@ -267,6 +269,8 @@ if seleccion == "Perfil de Jugadores":
         ("La Liga 2, España", "2025/2026"): "laliga22526.csv",
         ("Primera División, Uruguay", "2025"): "urup902025.csv",
         ("MLS, Estados Unidos", "2025"): "mlsp902025.csv",
+        ("MLS, Estados Unidos", "2026"): "mlsp902026.csv",
+
     }
 
     ligas_disponibles = list(ligas_temporadas.keys())
@@ -1404,7 +1408,7 @@ elif seleccion == "Radares Estadísticos":
         "Liga Profesional, Argentina": ["2025", "2026"],
         "Jupiler Pro League, Bélgica": ["2024/2025", "2025/2026"],
         "Serie A, Brasil": ["2025", "2026"],
-        "Primera División, Chile": ["2025"],
+        "Primera División, Chile": ["2025", "2026"],
         "Primera A, Colombia": ["2025", "2026"],
         "Liga Pro, Ecuador": ["2025"],
         "Premier League, Inglaterra": ["2024/2025", "2025/2026"],
@@ -1413,14 +1417,14 @@ elif seleccion == "Radares Estadísticos":
         "Serie A, Italia": ["2024/2025", "2025/2026"],
         "Serie B, Italia": ["2024/2025", "2025/2026"],
         "Eredivisie, Países Bajos": ["2024/2025", "2025/2026"],
-        "División Profesional, Paraguay": ["2025"],
+        "División Profesional, Paraguay": ["2025", "2026"],
         "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025", "2025/2026"],
         "Pro League, Arabia": ["2024/2025", "2025/2026"],
         "La Liga, España": ["2024/2025", "2025/2026"],
         "La Liga 2, España": ["2024/2025", "2025/2026"],
         "Primera División, Uruguay": ["2025"],
-        "MLS, Estados Unidos": ["2025"],
+        "MLS, Estados Unidos": ["2025", "2026"],
     }
 
     archivos_csv = {
@@ -1433,6 +1437,7 @@ elif seleccion == "Radares Estadísticos":
         ("Serie A, Brasil", "2025"): "brap902025.csv",
         ("Serie A, Brasil", "2026"): "brap902026.csv",
         ("Primera División, Chile", "2025"): "chip902025.csv",
+        ("Primera División, Chile", "2026"): "chip902026.csv",
         ("Primera A, Colombia", "2025"): "colp902025.csv",
         ("Primera A, Colombia", "2026"): "colp902026.csv",
         ("Liga Pro, Ecuador", "2025"): "ecup902025.csv",
@@ -1449,6 +1454,7 @@ elif seleccion == "Radares Estadísticos":
         ("Eredivisie, Países Bajos", "2024/2025"): "nedp902425.csv",
         ("Eredivisie, Países Bajos", "2025/2026"): "nedp902526.csv",
         ("División Profesional, Paraguay", "2025"): "parp902025.csv",
+        ("División Profesional, Paraguay", "2026"): "parp902026.csv",
         ("Primeira Liga, Portugal", "2024/2025"): "porp902425.csv",
         ("Primeira Liga, Portugal", "2025/2026"): "porp902526.csv",
         ("Premier League, Rusia", "2024/2025"): "rusp902425.csv",
@@ -1461,6 +1467,8 @@ elif seleccion == "Radares Estadísticos":
         ("La Liga 2, España", "2025/2026"): "laliga22526.csv",
         ("Primera División, Uruguay", "2025"): "urup902025.csv",
         ("MLS, Estados Unidos", "2025"): "mlsp902025.csv",
+        ("MLS, Estados Unidos", "2026"): "mlsp902026.csv",
+
     }
 
     ligas_disponibles = list(ligas_temporadas.keys())
@@ -3955,7 +3963,7 @@ if seleccion == "Ligas Alternas":
         "Primera División, Polonia": ["24/25"],
         "Segunda Liga, Portugal": ["24/25"],
         "Pro League, Arabia": ["24/25"],
-        "Premiership, Escocia": ["24/25"],
+        "Premiership, Escocia": ["24/25", "25/26"],
         "Primera RFEF, España": ["24/25"],
         "Segunda RFEF, España": ["24/25"],
         "Primera División, Turquía": ["24/25"],
@@ -3998,6 +4006,7 @@ if seleccion == "Ligas Alternas":
         ("Segunda Liga, Portugal", "24/25"): "portugal22425.csv",
         ("Pro League, Arabia", "24/25"): "arabia2425.csv",
         ("Premiership, Escocia", "24/25"): "escocia2425.csv",
+        ("Premiership, Escocia", "25/26"): "escocia2526.csv",
         ("Primera RFEF, España", "24/25"): "primerarfef2425.csv",
         ("Segunda RFEF, España", "24/25"): "segundarfef2425.csv",
         ("Primera División, Turquía", "24/25"): "turquia2425.csv",
@@ -5111,7 +5120,7 @@ if seleccion == "Radares Ligas Alternas":
         "Primera División, Polonia": ["24/25"],
         "Segunda Liga, Portugal": ["24/25"],
         "Pro League, Arabia": ["24/25"],
-        "Premiership, Escocia": ["24/25"],
+        "Premiership, Escocia": ["24/25", "25/26"],
         "Primera RFEF, España": ["24/25"],
         "Segunda RFEF, España": ["24/25"],
         "Primera División, Turquía": ["24/25"],
@@ -5153,6 +5162,7 @@ if seleccion == "Radares Ligas Alternas":
         ("Segunda Liga, Portugal", "24/25"): "portugal22425.csv",
         ("Pro League, Arabia", "24/25"): "arabia2425.csv",
         ("Premiership, Escocia", "24/25"): "escocia2425.csv",
+        ("Premiership, Escocia", "25/26"): "escocia2526.csv",
         ("Primera RFEF, España", "24/25"): "primerarfef2425.csv",
         ("Segunda RFEF, España", "24/25"): "segundarfef2425.csv",
         ("Primera División, Turquía", "24/25"): "turquia2425.csv",
