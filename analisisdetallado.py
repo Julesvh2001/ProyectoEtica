@@ -152,6 +152,7 @@ with st.sidebar:
         options=[
             "Perfil de Jugadores",
             "Radares Estadísticos",
+            "Físico y Pases entre Líneas",
             "Estadísticas Físicas",
             "Juego Bajo Presión",
             "Pases al Espacio",
@@ -160,7 +161,7 @@ with st.sidebar:
             "Radares Ligas Alternas"
         ],
         icons=[
-            "person-badge", "radar", "activity",
+            "person-badge", "radar", "upload", "activity",
             "exclamation-triangle", "arrows-move", "shuffle", "globe", "radar"
         ],
         menu_icon="list",
@@ -216,7 +217,7 @@ if seleccion == "Perfil de Jugadores":
         "1. Bundesliga, Alemania": ["2024/2025", "2025/2026"],
         "Serie A, Italia": ["2024/2025", "2025/2026"],
         "Serie B, Italia": ["2024/2025", "2025/2026"],
-        "Eredivisie, Países Bajos": ["2024/2025", "2025/2026"],
+        "Eredivisie, Países Bajos": ["2024/2025", "2025/2026", "2026/2027"],
         "División Profesional, Paraguay": ["2025", "2026"],
         "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025", "2025/2026"],
@@ -260,6 +261,7 @@ if seleccion == "Perfil de Jugadores":
         ("Serie B, Italia", "2025/2026"): "ita2p902526.csv",
         ("Eredivisie, Países Bajos", "2024/2025"): "nedp902425.csv",
         ("Eredivisie, Países Bajos", "2025/2026"): "nedp902526.csv",
+        ("Eredivisie, Países Bajos", "2026/2027"): "nedp902627.csv",
         ("División Profesional, Paraguay", "2025"): "parp902025.csv",
         ("División Profesional, Paraguay", "2026"): "parp902026.csv",
         ("Primeira Liga, Portugal", "2024/2025"): "porp902425.csv",
@@ -1426,7 +1428,7 @@ elif seleccion == "Radares Estadísticos":
         "1. Bundesliga, Alemania": ["2024/2025", "2025/2026"],
         "Serie A, Italia": ["2024/2025", "2025/2026"],
         "Serie B, Italia": ["2024/2025", "2025/2026"],
-        "Eredivisie, Países Bajos": ["2024/2025", "2025/2026"],
+        "Eredivisie, Países Bajos": ["2024/2025", "2025/2026", "2026/2027"],
         "División Profesional, Paraguay": ["2025", "2026"],
         "Primeira Liga, Portugal": ["2024/2025", "2025/2026"],
         "Premier League, Rusia": ["2024/2025", "2025/2026"],
@@ -1468,6 +1470,7 @@ elif seleccion == "Radares Estadísticos":
         ("Serie B, Italia", "2025/2026"): "ita2p902526.csv",
         ("Eredivisie, Países Bajos", "2024/2025"): "nedp902425.csv",
         ("Eredivisie, Países Bajos", "2025/2026"): "nedp902526.csv",
+        ("Eredivisie, Países Bajos", "2026/2027"): "nedp902627.csv",
         ("División Profesional, Paraguay", "2025"): "parp902025.csv",
         ("División Profesional, Paraguay", "2026"): "parp902026.csv",
         ("Primeira Liga, Portugal", "2024/2025"): "porp902425.csv",
@@ -3974,12 +3977,12 @@ if seleccion == "Ligas Alternas":
         "Superliga, Dinamarca": ["24/25"],
         "Championship, Inglaterra": ["24/25"],
         "Ligue 2, Francia": ["24/25"],
-        "Bundesliga 2, Alemania": ["24/25", "25/26"],
+        "Bundesliga 2, Alemania": ["24/25", "25/26", "26/27"],
         "Super League, Grecia": ["24/25", "25/26"],
         "J1 League, Japón": ["2025"],
         "K League, Korea": ["2025"],
         "Liga Profesional, Panamá": ["2025"],
-        "Primera División, Polonia": ["24/25"],
+        "Primera División, Polonia": ["24/25", "26/27"],
         "Segunda Liga, Portugal": ["24/25"],
         "Pro League, Arabia": ["24/25"],
         "Premiership, Escocia": ["24/25", "25/26"],
@@ -3989,7 +3992,7 @@ if seleccion == "Ligas Alternas":
         "Bundesliga, Austria": ["24/25"],
         "Super League, Suiza": ["24/25"],
         "Stars League, Qatar": ["24/25"],
-        "Pro League, Emiratos Árabes": ["24/25"],
+        "Pro League, Emiratos Árabes": ["24/25", "25/26"],
         "Eerste Divisie, Países Bajos": ["25/26"],
 
     }
@@ -4001,7 +4004,7 @@ if seleccion == "Ligas Alternas":
         ("MLS Next Pro, USA", "2026"): "nextpro2026.csv",
         ("Liga de Expansión, México", "24/25"): "expansion2425.csv",
         ("Liga de Expansión, México", "25/26"): "expansion2526.csv",
-        ("Liga de Expansión, México", "26/27"): "expansion2627.csv",
+        ("Liga de Expansión, México", "26/27"): "expp902627.csv",
         ("Liga MX Sub-21, México", "25/26"): "lmxu212526.csv",
         ("Liga MX Sub-23, México", "24/25"): "sub232425.csv",
         ("Liga 1, Perú", "2025"): "peru2025.csv",
@@ -4020,12 +4023,14 @@ if seleccion == "Ligas Alternas":
         ("Ligue 2, Francia", "24/25"): "ligue22425.csv",
         ("Bundesliga 2, Alemania", "24/25"): "bundes22425.csv",
         ("Bundesliga 2, Alemania", "25/26"): "bundes22526.csv",
+        ("Bundesliga 2, Alemania", "26/27"): "bundes22627.csv",
         ("Super League, Grecia", "24/25"): "grecia2425.csv",
         ("Super League, Grecia", "25/26"): "grecia2526.csv",
         ("J1 League, Japón", "2025"): "japan2025.csv",
         ("K League, Korea", "2025"): "korea2025.csv",
         ("Liga Profesional, Panamá", "2025"): "panama2025.csv",
         ("Primera División, Polonia", "24/25"): "polonia2425.csv",
+        ("Primera División, Polonia", "26/27"): "pol2627.csv",
         ("Segunda Liga, Portugal", "24/25"): "portugal22425.csv",
         ("Pro League, Arabia", "24/25"): "arabia2425.csv",
         ("Premiership, Escocia", "24/25"): "escocia2425.csv",
@@ -4037,6 +4042,7 @@ if seleccion == "Ligas Alternas":
         ("Super League, Suiza", "24/25"): "suiza2425.csv",
         ("Stars League, Qatar", "24/25"): "qatar2425.csv",
         ("Pro League, Emiratos Árabes", "24/25"): "uae2425.csv",
+        ("Pro League, Emiratos Árabes", "25/26"): "uaepro2526.csv",
         ("Eerste Divisie, Países Bajos", "25/26"): "ned22526.csv",
 
        
@@ -5137,12 +5143,12 @@ if seleccion == "Radares Ligas Alternas":
         "Superliga, Dinamarca": ["24/25"],
         "Championship, Inglaterra": ["24/25"],
         "Ligue 2, Francia": ["24/25"],
-        "Bundesliga 2, Alemania": ["24/25", "25/26"],
+        "Bundesliga 2, Alemania": ["24/25", "25/26", "26/27"],
         "Super League, Grecia": ["24/25", "25/26"],
         "J1 League, Japón": ["2025"],
         "K League, Korea": ["2025"],
         "Liga Profesional, Panamá": ["2025"],
-        "Primera División, Polonia": ["24/25"],
+        "Primera División, Polonia": ["24/25", "26/27"],
         "Segunda Liga, Portugal": ["24/25"],
         "Pro League, Arabia": ["24/25"],
         "Premiership, Escocia": ["24/25", "25/26"],
@@ -5152,7 +5158,7 @@ if seleccion == "Radares Ligas Alternas":
         "Bundesliga, Austria": ["24/25"],
         "Super League, Suiza": ["24/25"],
         "Stars League, Qatar": ["24/25"],
-        "Pro League, Emiratos Árabes": ["24/25"],
+        "Pro League, Emiratos Árabes": ["24/25", "25/26"],
         "Eerste Divisie, Países Bajos": ["25/26"],
 
 
@@ -5163,7 +5169,7 @@ if seleccion == "Radares Ligas Alternas":
         ("MLS Next Pro, USA", "2026"): "nextpro2026.csv",
         ("Liga de Expansión, México", "24/25"): "expansion2425.csv",
         ("Liga de Expansión, México", "25/26"): "expansion2526.csv",
-        ("Liga de Expansión, México", "26/27"): "expansion2627.csv",
+        ("Liga de Expansión, México", "26/27"): "expp902627.csv",
         ("Liga MX Sub-21, México", "25/26"): "lmxu212526.csv",
         ("Liga MX Sub-23, México", "24/25"): "sub232425.csv",
         ("Liga 1, Perú", "2025"): "peru2025.csv",
@@ -5182,12 +5188,14 @@ if seleccion == "Radares Ligas Alternas":
         ("Ligue 2, Francia", "24/25"): "ligue22425.csv",
         ("Bundesliga 2, Alemania", "24/25"): "bundes22425.csv",
         ("Bundesliga 2, Alemania", "25/26"): "bundes22526.csv",
+        ("Bundesliga 2, Alemania", "26/27"): "bundes22627.csv",
         ("Super League, Grecia", "24/25"): "grecia2425.csv",
         ("Super League, Grecia", "25/26"): "grecia2526.csv",
         ("J1 League, Japón", "2025"): "japan2025.csv",
         ("K League, Korea", "2025"): "korea2025.csv",
         ("Liga Profesional, Panamá", "2025"): "panama2025.csv",
         ("Primera División, Polonia", "24/25"): "polonia2425.csv",
+        ("Primera División, Polonia", "26/27"): "pol2627.csv",
         ("Segunda Liga, Portugal", "24/25"): "portugal22425.csv",
         ("Pro League, Arabia", "24/25"): "arabia2425.csv",
         ("Premiership, Escocia", "24/25"): "escocia2425.csv",
@@ -5199,6 +5207,7 @@ if seleccion == "Radares Ligas Alternas":
         ("Super League, Suiza", "24/25"): "suiza2425.csv",
         ("Stars League, Qatar", "24/25"): "qatar2425.csv",
         ("Pro League, Emiratos Árabes", "24/25"): "uae2425.csv",
+        ("Pro League, Emiratos Árabes", "25/26"): "uaepro2526.csv",
         ("Eerste Divisie, Países Bajos", "25/26"): "ned22526.csv"
 
 
@@ -5534,3 +5543,12 @@ if seleccion == "Radares Ligas Alternas":
                     if i + j < len(charts):
                         with cols[j]:
                             st.altair_chart(charts[i + j], use_container_width=True, theme=None)
+
+
+##############################################################################################################
+############################## Físico y Pases entre Líneas (archivo subido) ##################################
+##############################################################################################################
+
+if seleccion == "Físico y Pases entre Líneas":
+    import centrales_lineas
+    centrales_lineas.render()
